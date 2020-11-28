@@ -5,20 +5,20 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('planets') }}">
+                    <a href="/planets/1">
                         <x-jet-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ '/planets' }}" :active="request()->routeIs('planets')">
+                    <x-jet-nav-link href="/planets/1" :active="request()->routeIs('planets')">
                         {{ __('Planetas') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ '/ships' }}" :active="request()->routeIs('ships')">
+                    <x-jet-nav-link href="/starships/1" :active="request()->routeIs('starships')">
                         {{ __('Naves') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ '/favorites' }}" :active="request()->routeIs('favorites')">
+                    <x-jet-nav-link href="/favorites" :active="request()->routeIs('favorites')">
                         {{ __('Favoritos') }}
                     </x-jet-nav-link>
                 </div>
@@ -123,10 +123,10 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href='/planets' :active="request()->routeIs('planets')">
+            <x-jet-responsive-nav-link href='/planets/1' :active="request()->routeIs('planets')">
                 {{ __('Planetas') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href='/ships' :active="request()->routeIs('ships')">
+            <x-jet-responsive-nav-link href='/starships/1' :active="request()->routeIs('starships')">
                 {{ __('Naves') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href='/favorites' :active="request()->routeIs('favorites')">

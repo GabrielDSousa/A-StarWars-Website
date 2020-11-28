@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SwapiControlller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,18 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('planets');
-})->name('home');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::redirect("/planets", "/planets/1");
+    Route::redirect("/", "/planets/1");
+    Route::get('/planets/{page}', [SwapiControlller::class, 'planetsList'])->name('planets');
+    Route::get('/planet', [SwapiControlller::class, 'planet'])->name('planet');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/planets', function () {
-    return view('planets');
-})->name('planets');
+    Route::redirect("/starships", "/starships/1");
+    Route::get('/starships/{page}', [SwapiControlller::class, 'starshipsList'])->name('starships');
+    Route::get('/starship', [SwapiControlller::class, 'starship'])->name('starship');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/ships', function () {
-    return view('ships');
-})->name('ships');
+    Route::get('/details/{type}/{id}/', [SwapiControlller::class, 'getDetails'])->name('detailsGet');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/favorites', function () {
-    return view('favorites');
-})->name('favorites');
+    Route::get('/favorites', function () {
+        return view('favorites');
+    })->name('favorites');
+});
+

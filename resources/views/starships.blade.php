@@ -15,14 +15,13 @@ if (!is_null($responseBody->previous)) {
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Planetas') }}
+            {{ __('Naves') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                {{--Here is my own code--}}
                 @foreach ($responseBody->results as $response)
                     <a href="/details/{{explode("http://swapi.dev/api/", $response->url)[1]}}">
                         <div class="col-xl-3 col-md-6 mb-4 hvr-grow ">
@@ -43,21 +42,22 @@ if (!is_null($responseBody->previous)) {
                 @endforeach
                 <div class="flex flex-row flex-wrap justify-between">
                     <div @if(is_null($previous)) class="invisible" @endif>
-                        <a href="/planets/{{$previous}}" class="">
-                            <div class="rounded-md shadow border border-transparent text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                        <a href="/starships/{{$previous}}" class="">
+                            <div
+                                class="rounded-md shadow border border-transparent text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
                                 Anterior
                             </div>
                         </a>
                     </div>
                     <div @if(is_null($next)) class="invisible" @endif>
-                        <a href="/planets/{{$next}}" class="">
-                            <div class="rounded-md shadow border border-transparent text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                        <a href="/starships/{{$next}}" class="">
+                            <div
+                                class="rounded-md shadow border border-transparent text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
                                 Próximo
                             </div>
                         </a>
                     </div>
                 </div>
-                {{--Here is my own code--}}
             </div>
         </div>
     </div>
