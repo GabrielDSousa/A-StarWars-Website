@@ -13,16 +13,16 @@
                 <p>Diâmetro: {{$responseBody->diameter}} quilômetros</p>
                 <p>Clima: {{$responseBody->climate}}</p>
                 <p>Terreno: {{$responseBody->terrain}}</p>
-                <p>Superfície de água: {{$responseBody->surface_water}}</p>
+                <p>Superfície de água: {{$responseBody->surface_water}}%</p>
                 <p>População: {{$responseBody->population}}</p>
-                <h3>Notáveis:</h3>
-                @foreach($notables as $notable)
-                    <p>{{$notable}}</p>
-                @endforeach
-                <h3>Filmes:</h3>
-                @foreach($movies as $movie)
-                    <p>{{$movie}}</p>
-                @endforeach
+{{--                <h3>Notáveis:</h3>--}}
+{{--                @foreach($notables as $notable)--}}
+{{--                    <p>{{$notable}}</p>--}}
+{{--                @endforeach--}}
+{{--                <h3>Filmes:</h3>--}}
+{{--                @foreach($movies as $movie)--}}
+{{--                    <p>{{$movie}}</p>--}}
+{{--                @endforeach--}}
             </div>
         </div>
     </div>

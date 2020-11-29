@@ -10,6 +10,11 @@ if (!is_null($responseBody->previous)) {
     $explode = explode("=", $responseBody->previous);
     $previous = $explode[1];
 }
+
+function randomPlanet(){
+    $planet = 'planet'.rand("1","21");
+    return @svg($planet, ['class' => 'object-contain h-16 w-16']);
+}
 ?>
 
 <x-app-layout>
@@ -19,46 +24,45 @@ if (!is_null($responseBody->previous)) {
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                {{--Here is my own code--}}
-                @foreach ($responseBody->results as $response)
+    <div class="container mx-auto px-4 py-4">
+        {{--Here is my own code--}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            @foreach ($responseBody->results as $response)
+                <div>
                     <a href="/details/{{explode("http://swapi.dev/api/", $response->url)[1]}}">
-                        <div class="col-xl-3 col-md-6 mb-4 hvr-grow ">
-                            <div class="card shadow  py-0 rounded-lg ">
-                                <div class="card-body py-2 px-2">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div
-                                                class=" font-weight-bold mb-4 mt- 2 text-primary text-center text-uppercase mb-1">
-                                                {{ $response->name }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
+                            <div class="flex-shrink-0">
+                                {{randomPlanet()}}
+                            </div>
+                            <div>
+                                <div class="text-xl font-medium text-black">{{ $response->name }}</div>
+                                <p class="text-gray-500">Ver mais</p>
                             </div>
                         </div>
                     </a>
-                @endforeach
-                <div class="flex flex-row flex-wrap justify-between">
-                    <div @if(is_null($previous)) class="invisible" @endif>
-                        <a href="/planets/{{$previous}}" class="">
-                            <div class="rounded-md shadow border border-transparent text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-                                Anterior
-                            </div>
-                        </a>
-                    </div>
-                    <div @if(is_null($next)) class="invisible" @endif>
-                        <a href="/planets/{{$next}}" class="">
-                            <div class="rounded-md shadow border border-transparent text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-                                Próximo
-                            </div>
-                        </a>
-                    </div>
                 </div>
-                {{--Here is my own code--}}
+            @endforeach
+
+            <div @if(is_null($previous)) class="invisible" @endif>
+                <a href="/planets/{{$previous}}" >
+                    <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                        <div class="flex-shrink-0">
+                            Anterior
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div @if(is_null($next)) class="invisible" @endif>
+                <a href="/planets/{{$next}}" class="">
+                    <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center  space-x-4 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                        <div class="flex-shrink-0">
+                            Próximo
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
+    {{--Here is my own code--}}
 </x-app-layout>

@@ -15,25 +15,6 @@ class SwapiControlller extends Controller
      * @return Application|Factory|View
      * @throws GuzzleException
      */
-    public function planetsList($page)
-    {
-        $client = new Client(); //GuzzleHttp\Client
-        $url = "https://swapi.dev/api/planets/?page=" . $page;
-
-        $response = $client->request('GET', $url, [
-            'verify' => false,
-        ]);
-
-        $responseBody = json_decode($response->getBody());
-
-        return view('planets', compact('responseBody'));
-    }
-
-    /**
-     * @param int $page
-     * @return Application|Factory|View
-     * @throws GuzzleException
-     */
     public function starshipsList($page)
     {
         $client = new Client(); //GuzzleHttp\Client
@@ -57,7 +38,7 @@ class SwapiControlller extends Controller
     public function getDetails($type, $id)
     {
         $client = new Client(); //GuzzleHttp\Client
-        $url = 'http://swapi.dev/api/'.$type.'/'.$id;
+        $url = 'http://swapi.dev/api/' . $type . '/' . $id;
         $response = $client->request('GET', $url, [
             'verify' => false,
         ]);
@@ -75,35 +56,89 @@ class SwapiControlller extends Controller
 
     public function planet($responseBody)
     {
-        $notables = [];
-        $movies = [];
-        foreach ($responseBody->residents as $resident){
-            $client = new Client(); //GuzzleHttp\Client
-            $url = $resident;
-            $responseResident = $client->request('GET', $url, [
-                'verify' => false,
-            ]);
-
-            $responseBodyResident = json_decode($responseResident->getBody());
-            $notables [] = $responseBodyResident->name;
-        }
-
-        foreach ($responseBody->films as $film){
-            $client = new Client(); //GuzzleHttp\Client
-            $url = $film;
-            $responseFilm = $client->request('GET', $url, [
-                'verify' => false,
-            ]);
-
-            $responseBodyFilm = json_decode($responseFilm->getBody());
-            $movies [] = $responseBodyFilm->title." episódio: ".$responseBodyFilm->episode_id;
-        }
-
-        return view("planet", compact('responseBody', 'movies', 'notables'));
+        return view("planet", compact('responseBody'));
     }
 
     public function starship($responseBody)
     {
         return view("starship", compact('responseBody'));
+    }
+
+    /**
+     * @param int $page
+     * @return Application|Factory|View
+     * @throws GuzzleException
+     */
+    public function planetsList($page)
+    {
+        $client = new Client(); //GuzzleHttp\Client
+        $url = "https://swapi.dev/api/planets/?page=" . $page;
+
+        $response = $client->request('GET', $url, [
+            'verify' => false,
+        ]);
+
+        $responseBody = json_decode($response->getBody());
+
+        $this->cachePlanets();
+        return view('planets', compact('responseBody'));
+    }
+
+    public function cachePlanets()
+    {
+        $client = new Client(); //GuzzleHttp\Client
+        $planetNames = array();
+        $climateForTranslate = array();
+        $terrainForTranslate = array();
+
+        $url = "https://swapi.dev/api/planets/";
+        $response = $client->request('GET', $url, [
+            'verify' => false,
+        ]);
+        $responseBody = json_decode($response->getBody());
+        $numberOfPages = $responseBody->count / 10;
+
+        for ($i = 1; $i <= $numberOfPages; $i++) {
+            $url = "https://swapi.dev/api/planets/?page=" . $i;
+            $response = $client->request('GET', $url, [
+                'verify' => false,
+            ]);
+            $responseBody = json_decode($response->getBody());
+
+            foreach ($responseBody->results as $result) {
+                $planetNames[] = $result->name;
+                $aux = explode(", ", $result->climate);
+                foreach ($aux as $a) {
+                    if (!in_array($a, $climateForTranslate)) {
+                        $climateForTranslate[] = $a;
+                    }
+                }
+                $aux2 = explode(", ", $result->terrain);
+                foreach ($aux2 as $a2) {
+                    if (!in_array($a2, $terrainForTranslate)) {
+                        $terrainForTranslate[] = $a2;
+                    }
+                }
+            }
+
+        }
+
+        //planets
+        $encodedString = json_encode($planetNames);
+        $handle = fopen ( "D:/Estudo/A-StarWars-Website/resources/views/list/planetNames.txt" , 'wb');
+        fwrite ( $handle , $encodedString);
+        fclose($handle);
+
+        //terrains
+        $encodedString = json_encode($terrainForTranslate);
+        $handle = fopen ( "D:/Estudo/A-StarWars-Website/resources/views/list/terrainNames.txt" , 'wb');
+        fwrite ( $handle , $encodedString);
+        fclose($handle);
+
+        //climates
+        $encodedString = json_encode($climateForTranslate);
+        $handle = fopen ( "D:/Estudo/A-StarWars-Website/resources/views/list/climateNames.txt" , 'wb');
+        fwrite ( $handle , $encodedString);
+        fclose($handle);
     }
 }

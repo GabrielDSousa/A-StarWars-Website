@@ -1,0 +1,1 @@
+["arid","temperate","tropical","frozen","murky","windy","hot","artificial temperate ","frigid","humid","moist","polluted","unknown","superheated","subartic","artic","rocky"]
