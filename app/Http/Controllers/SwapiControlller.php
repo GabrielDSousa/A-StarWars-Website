@@ -17,16 +17,13 @@ class SwapiControlller extends Controller
      */
     public function starshipsList($page)
     {
-        $client = new Client(); //GuzzleHttp\Client
         $url = "http://swapi.dev/api/starships/?page=" . $page;
+        $responseBody = $this->responseBody($url);
 
-        $response = $client->request('GET', $url, [
-            'verify' => false,
-        ]);
+        $next = $this->haveNext($responseBody);
+        $previous = $this->havePrevious($responseBody);
 
-        $responseBody = json_decode($response->getBody());
-
-        return view('starships', compact('responseBody'));
+        return view('starships', compact('responseBody','next','previous'));
     }
 
     /**
@@ -37,13 +34,9 @@ class SwapiControlller extends Controller
      */
     public function getDetails($type, $id)
     {
-        $client = new Client(); //GuzzleHttp\Client
-        $url = 'http://swapi.dev/api/' . $type . '/' . $id;
-        $response = $client->request('GET', $url, [
-            'verify' => false,
-        ]);
 
-        $responseBody = json_decode($response->getBody());
+        $url = 'http://swapi.dev/api/' . $type . '/' . $id;
+        $responseBody = $this->responseBody($url);
 
         if ($type == "planets") {
             return $this->planet($responseBody);
@@ -56,7 +49,27 @@ class SwapiControlller extends Controller
 
     public function planet($responseBody)
     {
-        return view("planet", compact('responseBody'));
+        $filename = '..\resources\views\list\translationPtBr.json';
+        $handle = fopen($filename, 'rb');
+        $file = fread ($handle, filesize ($filename));
+        $translation = json_decode($file);
+        fclose($handle);
+
+        //Retrieving and translating climate
+        $climates = $translation->climates;
+        $climate = $responseBody->climate;
+        if(isset($climates->$climate) != false) {
+            $climate = $climates->$climate;
+        }
+
+        //Retrieving and translating terrain
+        $terrains = $translation->terrains;
+        $terrain = $responseBody->terrain;
+        if(isset($terrains->$terrain) != false){
+            $terrain = $terrains->$terrain;
+        }
+
+        return view("planet", compact('responseBody','climate', 'terrain'));
     }
 
     public function starship($responseBody)
@@ -71,74 +84,55 @@ class SwapiControlller extends Controller
      */
     public function planetsList($page)
     {
-        $client = new Client(); //GuzzleHttp\Client
         $url = "https://swapi.dev/api/planets/?page=" . $page;
+        $responseBody = $this->responseBody($url);
 
-        $response = $client->request('GET', $url, [
-            'verify' => false,
-        ]);
+        $next = $this->haveNext($responseBody);
+        $previous = $this->havePrevious($responseBody);
 
-        $responseBody = json_decode($response->getBody());
-
-        $this->cachePlanets();
-        return view('planets', compact('responseBody'));
+        return view('planets', compact('responseBody', 'next', 'previous'));
     }
 
-    public function cachePlanets()
+    /**
+     * @param $url
+     * @return mixed
+     * @throws GuzzleException
+     */
+    public function responseBody($url)
     {
         $client = new Client(); //GuzzleHttp\Client
-        $planetNames = array();
-        $climateForTranslate = array();
-        $terrainForTranslate = array();
-
-        $url = "https://swapi.dev/api/planets/";
         $response = $client->request('GET', $url, [
             'verify' => false,
         ]);
         $responseBody = json_decode($response->getBody());
-        $numberOfPages = $responseBody->count / 10;
+        return $responseBody;
+    }
 
-        for ($i = 1; $i <= $numberOfPages; $i++) {
-            $url = "https://swapi.dev/api/planets/?page=" . $i;
-            $response = $client->request('GET', $url, [
-                'verify' => false,
-            ]);
-            $responseBody = json_decode($response->getBody());
-
-            foreach ($responseBody->results as $result) {
-                $planetNames[] = $result->name;
-                $aux = explode(", ", $result->climate);
-                foreach ($aux as $a) {
-                    if (!in_array($a, $climateForTranslate)) {
-                        $climateForTranslate[] = $a;
-                    }
-                }
-                $aux2 = explode(", ", $result->terrain);
-                foreach ($aux2 as $a2) {
-                    if (!in_array($a2, $terrainForTranslate)) {
-                        $terrainForTranslate[] = $a2;
-                    }
-                }
-            }
-
+    /**
+     * @param $responseBody
+     * @return null|string[]
+     */
+    public function haveNext($responseBody)
+    {
+        $next = $responseBody->next;
+        if (!is_null($responseBody->next)) {
+            $explode = explode("=", $responseBody->next);
+            $next = $explode[1];
         }
+        return $next;
+    }
 
-        //planets
-        $encodedString = json_encode($planetNames);
-        $handle = fopen ( "D:/Estudo/A-StarWars-Website/resources/views/list/planetNames.txt" , 'wb');
-        fwrite ( $handle , $encodedString);
-        fclose($handle);
-
-        //terrains
-        $encodedString = json_encode($terrainForTranslate);
-        $handle = fopen ( "D:/Estudo/A-StarWars-Website/resources/views/list/terrainNames.txt" , 'wb');
-        fwrite ( $handle , $encodedString);
-        fclose($handle);
-
-        //climates
-        $encodedString = json_encode($climateForTranslate);
-        $handle = fopen ( "D:/Estudo/A-StarWars-Website/resources/views/list/climateNames.txt" , 'wb');
-        fwrite ( $handle , $encodedString);
-        fclose($handle);
+    /**
+     * @param $responseBody
+     * @return null|string[]
+     */
+    public function havePrevious($responseBody)
+    {
+        $previous = $responseBody->previous;
+        if (!is_null($responseBody->previous)) {
+            $explode = explode("=", $responseBody->previous);
+            $previous = $explode[1];
+        }
+        return $previous;
     }
 }

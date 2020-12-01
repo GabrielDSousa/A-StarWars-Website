@@ -1,16 +1,4 @@
 <?php
-$next = $responseBody->next;
-$previous = $responseBody->previous;
-if (!is_null($responseBody->next)) {
-    $explode = explode("=", $responseBody->next);
-    $next = $explode[1];
-}
-
-if (!is_null($responseBody->previous)) {
-    $explode = explode("=", $responseBody->previous);
-    $previous = $explode[1];
-}
-
 function randomPlanet(){
     $planet = 'planet'.rand("1","21");
     return @svg($planet, ['class' => 'object-contain h-16 w-16']);
