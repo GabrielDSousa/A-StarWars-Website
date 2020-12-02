@@ -23,9 +23,15 @@ function verifyUnknown($test)
         {{--Here is my own code--}}
         <div>
             <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-                <div class="md:flex items-center justify-center">
-                    <div class="flex-shrink-0">
-                        {{randomStarship()}}
+                <div class="md:flex justify-center">
+                    <div class="md:flex-shrink-0 flex flex-col place-content-between p-8">
+                        <div>
+                            {{randomStarship()}}
+                        </div>
+                        <div>
+                            <input type="button" value="Voltar" onClick="history.go(-1)"
+                                   class="flex-shrink-0 p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                        </div>
                     </div>
                     <div class="p-8">
                         <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{{$responseBody->name}}</div>
@@ -42,7 +48,7 @@ function verifyUnknown($test)
                         <p class="mt-2 text-gray-500">Velocidade de hyperdrive: {{verifyUnknown($responseBody->hyperdrive_rating)}} parsecs</p>
                         <p class="mt-2 text-gray-500">MGLT: {{verifyUnknown($responseBody->MGLT)}}</p>
                         <p class="mt-2 text-gray-500">Classe da nave espacial: {{verifyUnknown($responseBody->starship_class)}}</p>
-                        <a href="/salvar">
+                        <a href="/save/{{$type}}/{{$id}}">
                             <div
                                 class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
                                 <div class="flex-shrink-0">

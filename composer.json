@@ -11,6 +11,7 @@
         "php": "^7.0|^7.1|^7.3|^8.0",
         "ext-json": "*",
         "blade-ui-kit/blade-icons": "^0.5.1",
+        "blade-ui-kit/blade-ui-kit": "^0.2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
@@ -18,7 +19,8 @@
         "laravel/jetstream": "^1.6",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.0"
+        "livewire/livewire": "^2.0",
+        "owenvoke/blade-fontawesome": "^1.6"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -25,9 +25,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/starship', [SwapiControlller::class, 'starship'])->name('starship');
 
     Route::get('/details/{type}/{id}/', [SwapiControlller::class, 'getDetails'])->name('detailsGet');
+    Route::get('/save/{type}/{id}/', [SwapiControlller::class, 'save'])->name('save');
+    Route::delete('/delete/{id}', [SwapiControlller::class, 'delete'])->name('delete');
 
-    Route::get('/favorites', function () {
-        return view('favorites');
-    })->name('favorites');
+    Route::get('/favorites', [SwapiControlller::class, 'favorites'])->name('favorites');
 });
 

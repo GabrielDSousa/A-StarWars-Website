@@ -12,7 +12,7 @@
         "humid": "úmido",
         "moist": "úmido",
         "polluted": "poluído",
-        "unknown": "indefinido",
+        "unknown": "desconhecido",
         "superheated": "extremamente quente",
         "subartic": "subártico",
         "artic": "ártico",
@@ -35,7 +35,7 @@
         "lakes": "lagos",
         "grassy hills": "colinas gramadas",
         "swamps":  "pântanos",
-        "cityscape":  "",
+        "cityscape":  "paisagem urbana",
         "ocean":  "oceano",
         "rock":  "pedra",
         "mountain": "montanhoso",
@@ -64,7 +64,7 @@
         "rocky islands": "ilhas de pedra",
         "seas": "oceanos",
         "mesas": "mesas",
-        "unknown": "indefinido",
+        "unknown": "desconhecido",
         "deserts": "desertos",
         "reefs": "recifes",
         "islands": "ilhas",
@@ -77,10 +77,11 @@
         "rocky canyons": "cânions rochosos",
         "acid pools": "piscinas de ácido",
         "rocky": "rochoso",
-        "vines": "cinhas",
+        "vines": "vinhas",
         "cities": "cidades",
         "savannahs": "savanas",
-        "cliffs": "penhascos"
+        "cliffs": "penhascos",
+        "n/a": "desconhecido"
     }
 }
 
