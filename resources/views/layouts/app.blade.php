@@ -12,15 +12,22 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/all.css') }}">
+
         @livewireStyles
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
+
+            <div id='stars' class="overflow-hidden"></div>
+            <div id='stars2' class="overflow-hidden"></div>
+            <div id='stars3' class="overflow-hidden"></div>
+
             @livewire('navigation-dropdown')
 
             <!-- Page Heading -->
-            <header class="bg-white shadow">
+            <header class="bg-transparent shadow text-center">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
