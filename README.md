@@ -1,9 +1,3 @@
-# A-StarWars-Website
- Tool where you register, then log in, to see the planets and star-ships of Star Wars, their details and save them in a list of favorites.
- 
-
- 
- 
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
