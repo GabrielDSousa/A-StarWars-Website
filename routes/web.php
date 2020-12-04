@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::redirect("/planets", "/planets/1");
-    Route::redirect("/", "/planets/1");
+    Route::get('/list/{type}/{page}', [SwapiControlller::class, 'showList'])->name('list');
+    Route::redirect("/", "/list/planets/1");
+    Route::redirect("/dashboard", "/list/planets/1");
+    Route::redirect("/planets", "/list/planets/1");
+
     Route::get('/planets/{page}', [SwapiControlller::class, 'planetsList'])->name('planets');
     Route::get('/planet', [SwapiControlller::class, 'planet'])->name('planet');
 
@@ -24,7 +27,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/starships/{page}', [SwapiControlller::class, 'starshipsList'])->name('starships');
     Route::get('/starship', [SwapiControlller::class, 'starship'])->name('starship');
 
-    Route::get('/details/{type}/{id}/', [SwapiControlller::class, 'getDetails'])->name('detailsGet');
+    Route::get('/details/{type}/{id}/', [SwapiControlller::class, 'getDetails'])->name('details');
     Route::post('/save/{type}/{id}/', [SwapiControlller::class, 'save'])->name('save');
     Route::delete('/delete/{id}', [SwapiControlller::class, 'delete'])->name('delete');
 

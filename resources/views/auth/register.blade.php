@@ -1,4 +1,8 @@
 <x-guest-layout>
+    <div id='stars' class="overflow-hidden"></div>
+    <div id='stars2' class="overflow-hidden"></div>
+    <div id='stars3' class="overflow-hidden"></div>
+
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />

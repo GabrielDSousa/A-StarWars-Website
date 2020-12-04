@@ -8,24 +8,28 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 
 class SwapiControlller extends Controller
 {
-    /**
-     * @param int $page
-     * @return Application|Factory|View
-     * @throws GuzzleException
-     */
-    public function starshipsList($page)
+    public function showList($type, $page)
     {
-        $url = "http://swapi.dev/api/starships/?page=" . $page;
+        $url = "http://swapi.dev/api/".$type."/?page=" . $page;
         $responseBody = $this->responseBody($url);
-
         $next = $this->haveNext($responseBody);
         $previous = $this->havePrevious($responseBody);
+        $name = '';
+        if($type == 'planets'){
+            $name = 'Planetas';
+        }elseif ($type == 'starships'){
+            $name = 'Naves espaciais';
+        }elseif ($type == 'favorites'){
+            $name = 'Favoritos';
+        }else{
+            redirect('404');
+        }
 
-        return view('starships', compact('responseBody', 'next', 'previous'));
+
+        return view('list', compact('responseBody', 'next', 'previous','name', 'type'));
     }
 
     /**
@@ -51,7 +55,7 @@ class SwapiControlller extends Controller
     {
         $next = $responseBody->next;
         if (!is_null($responseBody->next)) {
-            $explode = explode("=", $responseBody->next);
+            $explode =explode("=", $responseBody->next);
             $next = $explode[1];
         }
         return $next;
@@ -65,7 +69,7 @@ class SwapiControlller extends Controller
     {
         $previous = $responseBody->previous;
         if (!is_null($responseBody->previous)) {
-            $explode = explode("=", $responseBody->previous);
+            $explode =explode("=", $responseBody->next);
             $previous = $explode[1];
         }
         return $previous;

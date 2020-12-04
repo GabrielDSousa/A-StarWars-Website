@@ -1,4 +1,9 @@
 <?php
+function randomPlanet(){
+    $planet = 'planet'.rand("1","21");
+    return @svg($planet, ['class' => 'object-contain h-32 w-32']);
+}
+
 function randomStarship()
 {
     $starship = 'rocket-' . rand("1", "29");
