@@ -78,7 +78,7 @@ class SwapiControlller extends Controller
     {
         $previous = $responseBody->previous;
         if (!is_null($responseBody->previous)) {
-            $explode = explode("=", $responseBody->next);
+            $explode = explode("=", $responseBody->previous);
             $previous = $explode[1];
         }
         return $previous;
