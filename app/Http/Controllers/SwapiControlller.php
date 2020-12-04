@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 
 class SwapiControlller extends Controller
 {
+    /**
+     * @param $type
+     * @param $page
+     * @return Application|Factory|View
+     * @throws GuzzleException
+     */
     public function showList($type, $page)
     {
         $url = "http://swapi.dev/api/" . $type . "/?page=" . $page;
@@ -95,39 +104,46 @@ class SwapiControlller extends Controller
         }
     }
 
+    /**
+     * @param $responseBody
+     * @param $type
+     * @param $id
+     * @return Application|Factory|View
+     */
     public function planet($responseBody, $type, $id)
     {
-        $filename = '..\resources\views\list\translationPtBr.json';
-        $handle = fopen($filename, 'rb');
-        $file = fread($handle, filesize($filename));
-        $translation = json_decode($file);
-        fclose($handle);
 
-//        Retrieving and translating climate
-        $climates = $translation->climates;
-        $climate = $responseBody->climate;
-        $climate = explode(', ', $climate);
-        $climas = [];
-        foreach ($climate as $c) {
-            if (isset($climates->$c) != false) {
-                $climas[] = $climates->$c;
+        //Retrieving and translating climate
+        $climates = $responseBody->climate;
+        $climates = explode(', ', $climates);
+        $climatesTranslated = [];
+        foreach ($climates as $climate) {
+            if (DB::table('translations')->where('key', $climate)->exists()) {
+                $translation = DB::table('translations')->where('key', $climate)->first();
+                $climatesTranslated [] = $translation->translation;
             }
         }
 
         //Retrieving and translating terrain
-        $terrains = $translation->terrains;
-        $terrain = $responseBody->terrain;
-        $terrain = explode(', ', $terrain);
-        $terrenos = [];
-        foreach ($terrain as $t) {
-            if (isset($terrains->$t) != false) {
-                $terrenos[] = $terrains->$t;
+        $terrains = $responseBody->terrain;
+        $terrains = explode(', ', $terrains);
+        $terrainsTranslated = [];
+        foreach ($terrains as $terrain) {
+            if (DB::table('translations')->where('key', $terrain)->exists()) {
+                $translation = DB::table('translations')->where('key', $terrain)->first();
+                $terrainsTranslated [] = $translation->translation;
             }
         }
 
-        return view("planet", compact('responseBody', 'climas', 'terrenos', 'type', 'id', 'translation'));
+        return view("planet", compact('responseBody', 'climatesTranslated', 'terrainsTranslated', 'type', 'id'));
     }
 
+    /**
+     * @param $responseBody
+     * @param $type
+     * @param $id
+     * @return Application|Factory|View
+     */
     public function starship($responseBody, $type, $id)
     {
         return view("starship", compact('responseBody', 'type', 'id'));
@@ -149,6 +165,12 @@ class SwapiControlller extends Controller
         return view('planets', compact('responseBody', 'next', 'previous'));
     }
 
+    /**
+     * @param $type
+     * @param $id
+     * @return Application|RedirectResponse|Redirector
+     * @throws GuzzleException
+     */
     public function save($type, $id)
     {
         $user = auth()->user();
@@ -159,13 +181,16 @@ class SwapiControlller extends Controller
             DB::table('favorites')->insert(
                 ['url' => $url, 'user_id' => $user->id, 'name' => $responseBody->name]
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect(route('favorites'));
         }
 
         return redirect(route('favorites'));
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function favorites()
     {
         $userId = auth()->user()->getAuthIdentifier();

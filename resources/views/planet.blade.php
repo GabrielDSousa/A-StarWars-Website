@@ -43,21 +43,21 @@ function verifyUnknown($test)
                         <p class="mt-2 text-white">Diâmetro: {{verifyUnknown($responseBody->diameter)}} quilômetros</p>
                         <p class="mt-2 text-white">Clima:
                             <?php $i = 0 ?>
-                            @foreach($climas as $clima)
+                            @foreach($climatesTranslated as $ct)
                                 @if($i > 0)
                                     {{', '}}
                                 @endif
-                                {{$clima}}
+                                {{$ct}}
                                 <?php $i++ ?>
                             @endforeach
                         </p>
                         <p class="mt-2 text-white">Terreno:
                             <?php $i = 0 ?>
-                            @foreach($terrenos as $terreno)
+                            @foreach($terrainsTranslated as $tt)
                                 @if($i > 0)
                                     {{', '}}
                                 @endif
-                                {{$terreno}}
+                                {{$tt}}
                                 <?php $i++ ?>
                             @endforeach
                         </p>

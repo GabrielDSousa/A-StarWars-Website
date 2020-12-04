@@ -23,6 +23,7 @@ DB_FOREIGN_KEYS=true
 
  ```shell script
 php artisan migrate
+php artisan db:seed
  ```
  
  
