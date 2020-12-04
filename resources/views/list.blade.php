@@ -46,7 +46,7 @@ function randomStarship()
             @endforeach
 
             <div @if(is_null($previous)) class="invisible" @endif>
-                <a href="{{ route('list', [$type, $previous])}}">
+                <a href="{{ route('list', ['type' => $type, 'page' => $next])}}">
                     <div
                         class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-blue-700 hover:bg-blue-900">
                         <div class="flex-shrink-0">
@@ -57,7 +57,7 @@ function randomStarship()
             </div>
 
             <div @if(is_null($next)) class="invisible" @endif>
-                <a href="{{ route('list', [$type, $next])}}">
+                <a href="{{ route('list', ['type' => $type, 'page' => $next])}}">
                     <div
                         class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center  space-x-4 text-base font-medium text-white bg-blue-700 hover:bg-blue-900">
                         <div class="flex-shrink-0">
