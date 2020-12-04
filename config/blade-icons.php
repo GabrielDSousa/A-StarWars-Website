@@ -15,47 +15,47 @@ return [
 
     'sets' => [
 
-         'default' => [
+        'default' => [
 
-             /*
-             |-----------------------------------------------------------------
-             | Icons Path
-             |-----------------------------------------------------------------
-             |
-             | Provide the relative path from your app root to your
-             | SVG icons directory. Icons are loaded recursively
-             | so there's no need to list every sub-directory.
-             |
-             */
+            /*
+            |-----------------------------------------------------------------
+            | Icons Path
+            |-----------------------------------------------------------------
+            |
+            | Provide the relative path from your app root to your
+            | SVG icons directory. Icons are loaded recursively
+            | so there's no need to list every sub-directory.
+            |
+            */
 
-             'path' => 'resources/svg',
+            'path' => 'resources/svg',
 
-             /*
-             |--------------------------------------------------------------------------
-             | Default Prefix
-             |--------------------------------------------------------------------------
-             |
-             | This config option allows you to define a default prefix for
-             | your icons. The dash separator will be applied automatically
-             | to every icon name. It's required and needs to be unique.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Default Prefix
+            |--------------------------------------------------------------------------
+            |
+            | This config option allows you to define a default prefix for
+            | your icons. The dash separator will be applied automatically
+            | to every icon name. It's required and needs to be unique.
+            |
+            */
 
-             'prefix' => 'icon',
+            'prefix' => 'icon',
 
-             /*
-             |--------------------------------------------------------------------------
-             | Default Set Class
-             |--------------------------------------------------------------------------
-             |
-             | This config option allows you to define some classes which
-             | will be applied to all icons by default within this set.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Default Set Class
+            |--------------------------------------------------------------------------
+            |
+            | This config option allows you to define some classes which
+            | will be applied to all icons by default within this set.
+            |
+            */
 
-             'class' => '',
+            'class' => '',
 
-         ],
+        ],
 
     ],
 

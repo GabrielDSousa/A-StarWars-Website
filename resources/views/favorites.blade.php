@@ -1,11 +1,13 @@
 <?php
-function randomStarship(){
-    $starship = 'rocket-'.rand("1","29");
+function randomStarship()
+{
+    $starship = 'rocket-' . rand("1", "29");
     return @svg($starship, ['class' => 'object-contain h-12 w-12', 'fill' => 'white']);
 }
 
-function randomPlanet(){
-    $planet = 'planet'.rand("1","21");
+function randomPlanet()
+{
+    $planet = 'planet' . rand("1", "21");
     return @svg($planet, ['class' => 'object-contain h-16 w-16']);
 }
 ?>
@@ -26,9 +28,12 @@ function randomPlanet(){
                         <?php
                         $id = $favorite->id;
                         ?>
-                        <div class="p-6 max-w-sm mx-auto bg-gray-900 rounded-xl shadow-md flex items-center space-x-4 hover:bg-gray-700 relative">
-                            <x-form-button :action="route('delete', $id)" method="DELETE" class="absolute top-0 right-0 p-4">
-                                <x-fas-trash class="p-2 flex items-center justify-center text-xs text-red-600 hover:bg-red-900"/>
+                        <div
+                            class="p-6 max-w-sm mx-auto bg-gray-900 rounded-xl shadow-md flex items-center space-x-4 hover:bg-gray-700 relative">
+                            <x-form-button :action="route('delete', $id)" method="DELETE"
+                                           class="absolute top-0 right-0 p-4">
+                                <x-fas-trash
+                                    class="p-2 flex items-center justify-center text-xs text-red-600 hover:bg-red-900"/>
                             </x-form-button>
                             <div class="flex-shrink-0">
                                 @if(str_contains($favorite->url, 'planets'))

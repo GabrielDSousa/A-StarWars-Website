@@ -1,6 +1,7 @@
 <?php
-function randomPlanet(){
-    $planet = 'planet'.rand("1","21");
+function randomPlanet()
+{
+    $planet = 'planet' . rand("1", "21");
     return @svg($planet, ['class' => 'object-contain h-32 w-32']);
 }
 
@@ -29,16 +30,19 @@ function verifyUnknown($test)
                         </div>
                         <div>
                             <input type="button" value="Voltar" onClick="history.go(-1)"
-                                class="flex-shrink-0 p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-blue-700 hover:bg-indigo-900">
+                                   class="flex-shrink-0 p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-blue-700 hover:bg-indigo-900">
                         </div>
                     </div>
                     <div class="p-8">
-                        <div class="uppercase tracking-wide text-sm text-gray-300 font-semibold">{{$responseBody->name}}</div>
-                        <p  class="mt-2 text-white">Período de rotação: {{verifyUnknown($responseBody->rotation_period)}} dias</p>
-                        <p  class="mt-2 text-white">Período de órbita: {{verifyUnknown($responseBody->orbital_period)}} dias</p>
-                        <p  class="mt-2 text-white">Diâmetro: {{verifyUnknown($responseBody->diameter)}} quilômetros</p>
-                        <p  class="mt-2 text-white">Clima:
-                            <?php $i=0 ?>
+                        <div
+                            class="uppercase tracking-wide text-sm text-gray-300 font-semibold">{{$responseBody->name}}</div>
+                        <p class="mt-2 text-white">Período de rotação: {{verifyUnknown($responseBody->rotation_period)}}
+                            dias</p>
+                        <p class="mt-2 text-white">Período de órbita: {{verifyUnknown($responseBody->orbital_period)}}
+                            dias</p>
+                        <p class="mt-2 text-white">Diâmetro: {{verifyUnknown($responseBody->diameter)}} quilômetros</p>
+                        <p class="mt-2 text-white">Clima:
+                            <?php $i = 0 ?>
                             @foreach($climas as $clima)
                                 @if($i > 0)
                                     {{', '}}
@@ -47,8 +51,8 @@ function verifyUnknown($test)
                                 <?php $i++ ?>
                             @endforeach
                         </p>
-                        <p  class="mt-2 text-white">Terreno:
-                            <?php $i=0 ?>
+                        <p class="mt-2 text-white">Terreno:
+                            <?php $i = 0 ?>
                             @foreach($terrenos as $terreno)
                                 @if($i > 0)
                                     {{', '}}
@@ -57,10 +61,13 @@ function verifyUnknown($test)
                                 <?php $i++ ?>
                             @endforeach
                         </p>
-                        <p  class="mt-2 text-white">Superfície de água: {{verifyUnknown($responseBody->surface_water)}}%</p>
-                        <p  class="mt-2 text-white">População: {{verifyUnknown($responseBody->population)}} habitantes</p>
+                        <p class="mt-2 text-white">Superfície de água: {{verifyUnknown($responseBody->surface_water)}}
+                            %</p>
+                        <p class="mt-2 text-white">População: {{verifyUnknown($responseBody->population)}}
+                            habitantes</p>
 
-                        <x-form-button :action="route('save', [$type, $id])" method="POST" class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-blue-700 hover:bg-indigo-900">
+                        <x-form-button :action="route('save', [$type, $id])" method="POST"
+                                       class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center justify-center space-x-4 text-base font-medium text-white bg-blue-700 hover:bg-indigo-900">
                             Salvar nos favoritos
                         </x-form-button>
                     </div>

@@ -13,23 +13,23 @@ class SwapiControlller extends Controller
 {
     public function showList($type, $page)
     {
-        $url = "http://swapi.dev/api/".$type."/?page=" . $page;
+        $url = "http://swapi.dev/api/" . $type . "/?page=" . $page;
         $responseBody = $this->responseBody($url);
         $next = $this->haveNext($responseBody);
         $previous = $this->havePrevious($responseBody);
         $name = '';
-        if($type == 'planets'){
+        if ($type == 'planets') {
             $name = 'Planetas';
-        }elseif ($type == 'starships'){
+        } elseif ($type == 'starships') {
             $name = 'Naves espaciais';
-        }elseif ($type == 'favorites'){
+        } elseif ($type == 'favorites') {
             $name = 'Favoritos';
-        }else{
+        } else {
             redirect('404');
         }
 
 
-        return view('list', compact('responseBody', 'next', 'previous','name', 'type'));
+        return view('list', compact('responseBody', 'next', 'previous', 'name', 'type'));
     }
 
     /**
@@ -55,7 +55,7 @@ class SwapiControlller extends Controller
     {
         $next = $responseBody->next;
         if (!is_null($responseBody->next)) {
-            $explode =explode("=", $responseBody->next);
+            $explode = explode("=", $responseBody->next);
             $next = $explode[1];
         }
         return $next;
@@ -69,7 +69,7 @@ class SwapiControlller extends Controller
     {
         $previous = $responseBody->previous;
         if (!is_null($responseBody->previous)) {
-            $explode =explode("=", $responseBody->next);
+            $explode = explode("=", $responseBody->next);
             $previous = $explode[1];
         }
         return $previous;
@@ -159,7 +159,7 @@ class SwapiControlller extends Controller
             DB::table('favorites')->insert(
                 ['url' => $url, 'user_id' => $user->id, 'name' => $responseBody->name]
             );
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect(route('favorites'));
         }
 
@@ -174,7 +174,8 @@ class SwapiControlller extends Controller
         return view('favorites', compact('favorites'));
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         DB::table('favorites')->delete($id);
         return redirect(route('favorites'));
     }
