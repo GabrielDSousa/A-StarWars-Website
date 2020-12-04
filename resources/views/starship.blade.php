@@ -53,8 +53,10 @@ function verifyUnknown($test)
                         <p class="mt-2 text-white">Passageiros: {{verifyUnknown($responseBody->passengers)}}</p>
                         <p class="mt-2 text-white">Capacidade de cargo: {{verifyUnknown($responseBody->cargo_capacity)}}
                             habitantes</p>
-                        <p class="mt-2 text-white">Tempo de
-                            alimentação: {{explode(' ',verifyUnknown($responseBody->consumables))[1] == 'days' ? verifyUnknown($responseBody->consumables)[0].' dias' : verifyUnknown($responseBody->consumables)[0].'anos'}} </p>
+                        <p class="mt-2 text-white">
+                            @if(verifyUnknown($responseBody->consumables) === 'desconhecido')
+                                Tempo de alimentação: {{explode(' ',verifyUnknown($responseBody->consumables))[1] == 'days' ? verifyUnknown($responseBody->consumables)[0].' dias' : verifyUnknown($responseBody->consumables)[0].'anos'}} </p>
+                            @endif
                         <p class="mt-2 text-white">Velocidade de
                             hyperdrive: {{verifyUnknown($responseBody->hyperdrive_rating)}} parsecs</p>
                         <p class="mt-2 text-white">MGLT: {{verifyUnknown($responseBody->MGLT)}}</p>
